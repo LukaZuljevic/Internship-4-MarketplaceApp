@@ -13,5 +13,13 @@
         {
             Users.Add(newUser);
         }
+
+        public void PrintUsers()
+        {
+            foreach(var user in Users)
+            {
+                Console.WriteLine($"Ime: {user.Name}, Email: {user.Email}");
+            }
+        }
     }
 }

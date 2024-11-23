@@ -3,6 +3,7 @@ using Internship_4_MarketplaceApp.Domain.Classes;
 using Internship_4_MarketplaceApp.Domain.Classes.Users;
 using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks.Sources;
 
 namespace Internship_4_MarketplaceApp.Presentation
 {
@@ -25,13 +26,13 @@ namespace Internship_4_MarketplaceApp.Presentation
                         UserRegistration();
                         break;
                     case "2":
-                        //UserLogin();
+                        UserLogin();
                         break;
                     case "3":
                         return;
                     default:
                         Console.Clear();
-                        Console.WriteLine("Krivi unos, unesi ponovno!");
+                        Console.WriteLine("Krivi unos, unesi ponovno!\n");
                         break;
                 }
             }
@@ -39,6 +40,9 @@ namespace Internship_4_MarketplaceApp.Presentation
 
         static void UserRegistration()
         {
+            Console.Clear();
+            Console.WriteLine("Registracija korisnika:\n");
+
             var userName = CheckIfValidString("ime", "korisnika");
             var userEmail = CheckIfValidEmail();
             var userType = GetUserType();
@@ -61,7 +65,33 @@ namespace Internship_4_MarketplaceApp.Presentation
                 Console.WriteLine("Uspjena registracija!");
             }
 
-            //UserLogin();
+            UserLogin();
+        }
+
+        static void UserLogin()
+        {
+            Console.Clear();
+            Console.WriteLine("Prijava korisnika:\n");
+
+            var userEmail = CheckIfValidEmail();
+
+            var matchingUser = marketplace.Users.FirstOrDefault(user => user.Email == userEmail);
+
+            if (matchingUser != null)
+            {
+                if (matchingUser is Customer)
+                {
+                    // CustomerMenu();
+                }
+                else if (matchingUser is Salesman)
+                {
+                    // SalesmanMenu();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ne postoji korisnik s tim email-om!\n");
+            }
         }
 
         static string CheckIfValidString(string attribute, string entity)
@@ -75,12 +105,12 @@ namespace Internship_4_MarketplaceApp.Presentation
 
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine("Ne smije biti empty string! ");
+                    Console.WriteLine("Ne smije biti empty string!\n");
                     continue;
                 }
                 else if (!input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
                 {
-                    Console.WriteLine("Smijes unit samo slova!");
+                    Console.WriteLine("Smijes unit samo slova!\n");
                     continue;
                 }
 
@@ -101,7 +131,7 @@ namespace Internship_4_MarketplaceApp.Presentation
 
                 if (string.IsNullOrEmpty(emailInput))
                 {
-                    Console.WriteLine("Ne smije biti empty string! ");
+                    Console.WriteLine("Ne smije biti empty string!\n");
                     continue;
                 }
 
@@ -112,7 +142,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                 }
                 else
                 {
-                    Console.WriteLine("Unesi validan email!");
+                    Console.WriteLine("Unesi validan email!\n");
                     continue;
                 }
             }
@@ -155,7 +185,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                 }
                 else
                 {
-                    Console.WriteLine("Krivi unos, unesi ponovno!");
+                    Console.WriteLine("Krivi unos, unesi ponovno!\n");
                 }
             }
         }
