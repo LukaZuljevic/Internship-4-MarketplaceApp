@@ -147,8 +147,8 @@ namespace Internship_4_MarketplaceApp.Presentation
                         salesman.PrintAllProducts();
                         break;
                     case "3":
-                        var totalEarnings = salesman.CalculateEarnings();
-                        Console.WriteLine($"Ukupna zarada: {totalEarnings}\n");
+                        Console.Clear();
+                        Console.WriteLine($"Ukupna zarada: {salesman.Earnings}\n");
                         break;
                     case "4":
                         var productCategory = PickProductType();
@@ -189,7 +189,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                         break;
                     case "3":
                         var productToReturn = PickProductToReturn(customer);
-                        customer.ReturnProduct(productToReturn);
+                        customer.ReturnProduct(productToReturn, marketplace);
                         break;
                     case "4":
                         var productToFavorite = PickProductFromMarketplace(customer);

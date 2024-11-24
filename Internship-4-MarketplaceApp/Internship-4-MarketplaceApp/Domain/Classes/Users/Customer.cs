@@ -18,7 +18,7 @@
             BoughtProducts.Add(product);
         }
 
-        public void ReturnProduct(Product product)
+        public void ReturnProduct(Product product, Marketplace marketplace)
         {
             if (!BoughtProducts.Contains(product))
             {
@@ -26,11 +26,15 @@
                 return;
             }
 
+            Transaction newTransaction = new Transaction(this, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Povrat);
+            marketplace.AddNewTransaction(newTransaction);
+
             BoughtProducts.Remove(product);
             product.Salesman.SoldProducts.Remove(product);
 
             product.OnSale();
 
+            product.Salesman.SetEarnings((-product.Price + 0.15*product.Price));
             SetBalance(product.Price * 0.8);
         }
 

@@ -10,6 +10,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 
         public Salesman(string name, string email) : base(name, email)
         {
+            Earnings = 0;
             ListOfProducts = new List<Product>();
             SoldProducts = new List<Product>();
         }
@@ -43,16 +44,9 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
             Console.WriteLine("\n");
         }
 
-        public double CalculateEarnings()
+        public void SetEarnings(double amount)
         {
-            Console.Clear();
-            Earnings = 0;
-
-            foreach(var product in SoldProducts)
-                Earnings += product.Price;
-
-
-            return Earnings;
+            Earnings += amount;
         }
 
         public void ProductByCategory(Data.Enum.ProductType category)
