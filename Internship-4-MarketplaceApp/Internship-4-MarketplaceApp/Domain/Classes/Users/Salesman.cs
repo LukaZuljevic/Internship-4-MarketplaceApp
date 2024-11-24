@@ -4,10 +4,12 @@
     {
         public double Earnings { get; private set;}
         public List<Product> ListOfProducts;
+        public List<Product> SoldProducts;
 
         public Salesman(string name, string email) : base(name, email)
         {
             ListOfProducts = new List<Product>();
+            SoldProducts = new List<Product>();
         }
 
         public void AddNewProduct(Product newProduct)
@@ -22,25 +24,40 @@
             ListOfProducts.Add(newProduct);
         }
 
-        public void RemoveProduct(Product product)
+        public void SellProduct(Product product)
         {
-            if (ListOfProducts.Remove(product))
-            {
+            if (ListOfProducts.Contains(product) && product.Status != Data.Enum.Status.Prodano)
                 Console.WriteLine("Uspjesno kupljen proizvod!");
-                return;
-            }
             else
             {
                 Console.WriteLine("Taj proizvod ne postoji!");
+                return;
             }
+            product.Status = Data.Enum.Status.Prodano;
+            SoldProducts.Add(product);
         }
 
         public void PrintAllProducts()
         {
+            Console.Clear();
+            Console.WriteLine($"Proizvodi korisnika {Name}: \n");
             foreach(var product in ListOfProducts)
             {
                 Console.WriteLine($"Product:  {product.Name} - {product.Description} - {product.Price}eura - {product.Status}");
             }
+            Console.WriteLine("\n");
+        }
+
+        public double CalculateEarnings()
+        {
+            Console.Clear();
+            Earnings = 0;
+
+            foreach(var product in SoldProducts)
+                Earnings += product.Price;
+
+
+            return Earnings;
         }
 
         public override string ToString()

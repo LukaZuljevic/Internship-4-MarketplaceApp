@@ -137,8 +137,11 @@ namespace Internship_4_MarketplaceApp.Presentation
                         salesman.PrintAllProducts();
                         break;
                     case "3":
+                        var totalEarnings = salesman.CalculateEarnings();
+                        Console.WriteLine($"Ukupna zarada: {totalEarnings}\n");
                         break;
                     case "4":
+
                         break;
                     case "5":
                         break;
