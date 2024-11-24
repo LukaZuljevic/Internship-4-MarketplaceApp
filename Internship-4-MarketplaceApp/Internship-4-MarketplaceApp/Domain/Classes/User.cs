@@ -12,7 +12,7 @@
             Name = name;
             Email = email;
         }
-        public User() {}
+        //public User() {}
 
         public abstract string ToString();
     }
