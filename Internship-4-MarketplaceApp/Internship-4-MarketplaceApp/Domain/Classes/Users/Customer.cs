@@ -4,17 +4,35 @@
     {
         public double Balance { get; private set; }
         public List<Product> BoughtProducts { get; set; }
+        public List<Product> FavoriteProducts { get; set; }
 
         public Customer(string name, string email, double balance) : base(name, email)
         {
             Balance = balance;
             BoughtProducts = new List<Product>();
+            FavoriteProducts = new List<Product>();
         }
 
         public void BuyProduct(Product product)
         {
             BoughtProducts.Add(product);
-        }            
+        }
+
+        public void ReturnProduct(Product product)
+        {
+            if (!BoughtProducts.Contains(product))
+            {
+                Console.WriteLine("Taj proizvod nije tvoj.\n");
+                return;
+            }
+
+            BoughtProducts.Remove(product);
+            product.Salesman.SoldProducts.Remove(product);
+
+            product.OnSale();
+
+            SetBalance(product.Price * 0.8);
+        }
 
         public void SetBalance(double amount)
         {
@@ -27,6 +45,30 @@
             {
                 Console.WriteLine($"Proizvod: {product.Id} - {product.Name} - {product.ProductType} - {product.Description}");
             }
+        }
+
+        public void AddProductToFavorite(Product product)
+        {
+            Console.Clear();
+            FavoriteProducts.Add(product);
+            Console.WriteLine("Uspjesno dodan proizvodi u favorite!\n");
+        }
+
+        public void PrintFavouriteProducts()
+        {
+            Console.Clear();
+            if (FavoriteProducts.Count == 0) 
+            {
+                Console.WriteLine("Nemas proizvoda u favoritima\n");
+                return;
+            }
+
+            Console.WriteLine("Lista favorita:\n");
+            foreach(var product in FavoriteProducts)
+            {
+                Console.WriteLine(product.ToString());
+            }
+            Console.WriteLine("\n");
         }
 
         public override string ToString()

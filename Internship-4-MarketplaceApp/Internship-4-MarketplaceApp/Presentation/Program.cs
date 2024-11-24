@@ -184,18 +184,21 @@ namespace Internship_4_MarketplaceApp.Presentation
                         marketplace.PrintProducts();
                         break;
                     case "2":
-                        var productToBuy = PickProductToBuy(customer);
+                        var productToBuy = PickProductFromMarketplace(customer);
                         marketplace.SellProduct(productToBuy, customer);
                         break;
                     case "3":
                         var productToReturn = PickProductToReturn(customer);
-                        marketplace.ReturnProduct(productToReturn, customer);
+                        customer.ReturnProduct(productToReturn);
                         break;
                     case "4":
+                        var productToFavorite = PickProductFromMarketplace(customer);
+                        customer.AddProductToFavorite(productToFavorite);
                         break;
                     case "5":
                         break;
                     case "6":
+                        customer.PrintFavouriteProducts();
                         break;
                     case "7":
                         Console.Clear();
@@ -221,7 +224,7 @@ namespace Internship_4_MarketplaceApp.Presentation
             marketplace.AddNewProduct(newProduct);
         }
 
-        static Product PickProductToBuy(Customer customer)
+        static Product PickProductFromMarketplace(Customer customer)
         {
             Console.Clear();
             marketplace.PrintProducts();
