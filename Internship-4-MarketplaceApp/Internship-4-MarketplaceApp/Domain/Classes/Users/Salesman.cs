@@ -1,4 +1,6 @@
-﻿namespace Internship_4_MarketplaceApp.Domain.Classes.Users
+﻿using System.Security.Cryptography;
+
+namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 {
     public class Salesman : User
     {
@@ -43,7 +45,7 @@
             Console.WriteLine($"Proizvodi korisnika {Name}: \n");
             foreach(var product in ListOfProducts)
             {
-                Console.WriteLine($"Product:  {product.Name} - {product.Description} - {product.Price}eura - {product.Status}");
+                Console.WriteLine($"{product.ToString()}");
             }
             Console.WriteLine("\n");
         }
@@ -60,9 +62,18 @@
             return Earnings;
         }
 
+        public void ProductByCategory(Data.Enum.ProductType category)
+        {
+            foreach(var product in ListOfProducts)
+            {
+                if(product.ProductType == category)
+                    Console.WriteLine($"{product.ToString()}");
+            }
+        }
+
         public override string ToString()
         {
-            return $"Name: {Name}, Email: {Email}, Earnings: {Earnings}";
+            return $"Ime: {Name}, Email: {Email}, Zarada: {Earnings}";
         }
     }
 }

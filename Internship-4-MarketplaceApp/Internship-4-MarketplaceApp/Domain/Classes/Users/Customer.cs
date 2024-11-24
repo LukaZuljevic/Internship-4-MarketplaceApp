@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return $"Name: {Name}, Email: {Email}, Balance: {Balance}";
+            return $"Ime: {Name}, Email: {Email}, Stanje racuna: {Balance}";
         }
     }
 }

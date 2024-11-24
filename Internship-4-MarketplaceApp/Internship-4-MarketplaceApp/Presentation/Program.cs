@@ -141,9 +141,11 @@ namespace Internship_4_MarketplaceApp.Presentation
                         Console.WriteLine($"Ukupna zarada: {totalEarnings}\n");
                         break;
                     case "4":
-
+                        var productCategory = PickProductType();
+                        salesman.ProductByCategory(productCategory);
                         break;
                     case "5":
+
                         break;
                     case "6":
                         Console.Clear();
@@ -284,7 +286,7 @@ namespace Internship_4_MarketplaceApp.Presentation
             }
         }
 
-        static Enum PickProductType()
+        static ProductType PickProductType()
         {
             Console.Clear();
             Console.WriteLine("Odaberite kategoriju proizvoda:\n");

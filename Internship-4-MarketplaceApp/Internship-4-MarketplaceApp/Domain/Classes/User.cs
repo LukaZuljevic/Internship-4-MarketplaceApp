@@ -12,7 +12,6 @@
             Name = name;
             Email = email;
         }
-        //public User() {}
 
         public abstract string ToString();
     }

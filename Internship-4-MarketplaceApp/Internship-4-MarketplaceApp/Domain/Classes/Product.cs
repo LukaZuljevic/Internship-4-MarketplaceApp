@@ -32,5 +32,10 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         {
             Status = Status.Prodano;
         }
+
+        public override string ToString()
+        {
+            return $"Ime: {Name}, Cijena: {Price}eura, Status: {Status}";
+        }
     }
 }
