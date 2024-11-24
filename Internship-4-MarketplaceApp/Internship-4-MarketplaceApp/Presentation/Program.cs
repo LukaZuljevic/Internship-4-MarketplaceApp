@@ -27,6 +27,16 @@ namespace Internship_4_MarketplaceApp.Presentation
             marketplace.AddNewUser(testSalesman1);
             marketplace.AddNewUser(testSalesman2);
             marketplace.AddNewUser(testSalesman3);
+            marketplace.AddNewUser(testCustomer1);
+
+            marketplace.AddNewProduct(testProduct1);
+            marketplace.AddNewProduct(testProduct4);
+            marketplace.AddNewProduct(testProduct2);
+            marketplace.AddNewProduct(testProduct3);
+            marketplace.AddNewProduct(testProduct5);
+            marketplace.AddNewProduct(testProduct6);
+            marketplace.AddNewProduct(testProduct7);
+
             testSalesman1.AddNewProduct(testProduct1);
             testSalesman1.AddNewProduct(testProduct4);
             testSalesman2.AddNewProduct(testProduct2);
@@ -103,9 +113,9 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             if (matchingUser != null)
             {
-                if (matchingUser is Customer)
+                if (matchingUser is Customer customer)
                 {
-                    // CustomerMenu();
+                    CustomerMenu(customer);
                 }
                 else if (matchingUser is Salesman salesman)
                 {
@@ -145,9 +155,45 @@ namespace Internship_4_MarketplaceApp.Presentation
                         salesman.ProductByCategory(productCategory);
                         break;
                     case "5":
-
+                        //napravi ovo!
                         break;
                     case "6":
+                        Console.Clear();
+                        return;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Krivi unos, unesi ponovno!");
+                        break;
+                }
+            }
+        }
+
+        static void CustomerMenu(Customer customer)
+        {
+            Console.Clear();
+            Console.WriteLine("Dobrodosli u prostor za kupca\n");
+
+            while (true)
+            {
+                Console.WriteLine("1 - Pegledaj sve dostupne proizvode\n2 - Kupi proizvod\n3 - Vrati kupljeni proizvod\n4 - Dodaj proizvod na omiljenu listu\n5 - Pregledaj povijest kupljenih proizvoda\n6 - Pregledaj listu omiljenih prozivoda\n7 - Vrati se nazad na pocetni menu");
+                var userSelection = Console.ReadLine();
+
+                switch (userSelection)
+                {
+                    case "1":
+                        marketplace.PrintProducts();
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "5":
+                        break;
+                    case "6":
+                        break;
+                    case "7":
                         Console.Clear();
                         return;
                     default:

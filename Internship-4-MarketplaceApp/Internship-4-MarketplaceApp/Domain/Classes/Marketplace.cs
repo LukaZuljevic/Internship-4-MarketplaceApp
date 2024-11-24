@@ -29,5 +29,16 @@
                 Console.WriteLine($"Ime: {user.Name}, Email: {user.Email}");
             }
         }
+
+        public void PrintProducts()
+        {
+            Console.Clear();
+            Console.WriteLine("Svi proizvodi na marketu\n");
+            foreach(var product in ListOfProducts)
+            {
+                Console.WriteLine(product.ToString());
+            }
+            Console.WriteLine("\n");
+        }
     }
 }
