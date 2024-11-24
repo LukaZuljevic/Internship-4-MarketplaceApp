@@ -29,8 +29,28 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             }
 
             Console.WriteLine("Uspjesno kupljen proizvod!\n");
+
+            product.Salesman.SellProduct(product);
+            customer.BuyProduct(product);
             customer.SetBalance(-product.Price);
+
             return true;
+        }
+
+        public void ReturnProduct(Product product, Customer customer)
+        {
+            if (!customer.BoughtProducts.Contains(product))
+            {
+                Console.WriteLine("Taj proizvod nije tvoj.\n");
+                return;
+            }
+
+            customer.BoughtProducts.Remove(product);
+            product.Salesman.SoldProducts.Remove(product);
+
+            product.OnSale();
+
+            customer.SetBalance(product.Price*0.8);
         }
 
         public void AddNewUser(User newUser)

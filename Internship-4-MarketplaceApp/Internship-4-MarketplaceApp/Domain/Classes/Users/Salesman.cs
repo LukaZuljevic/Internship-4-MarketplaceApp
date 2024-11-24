@@ -28,7 +28,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 
         public void SellProduct(Product product)
         {
-            product.Status = Data.Enum.Status.Prodano;
+            product.SoldOut();
             SoldProducts.Add(product);
         }
 

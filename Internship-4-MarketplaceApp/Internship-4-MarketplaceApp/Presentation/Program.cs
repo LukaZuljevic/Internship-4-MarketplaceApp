@@ -185,10 +185,11 @@ namespace Internship_4_MarketplaceApp.Presentation
                         break;
                     case "2":
                         var productToBuy = PickProductToBuy(customer);
-                        if(marketplace.SellProduct(productToBuy, customer))
-                            productToBuy.Salesman.SellProduct(productToBuy);
+                        marketplace.SellProduct(productToBuy, customer);
                         break;
                     case "3":
+                        var productToReturn = PickProductToReturn(customer);
+                        marketplace.ReturnProduct(productToReturn, customer);
                         break;
                     case "4":
                         break;
@@ -235,6 +236,35 @@ namespace Internship_4_MarketplaceApp.Presentation
                 if (int.TryParse(pickedProductId, out int productId))
                 {
                     selectedProduct = marketplace.ListOfProducts.FirstOrDefault(p => p.Id == productId);
+
+                    if (selectedProduct != null)
+                        break;
+                    else
+                        Console.WriteLine("Proizvod s tim Id-em ne postoji!");
+                }
+                else
+                {
+                    Console.WriteLine("Krivi unos, Id mora bit broj.");
+                }
+            }
+
+            return selectedProduct;
+        }
+
+        static Product PickProductToReturn(Customer customer)
+        {
+            Console.Clear();
+            customer.PrintBoughtProducts();
+
+            Product selectedProduct = null;
+            while (true)
+            {
+                Console.Write("\nOdaberi Id jednog od proizvoda na listi: ");
+                var pickedProductId = Console.ReadLine();
+
+                if (int.TryParse(pickedProductId, out int productId))
+                {
+                    selectedProduct = customer.BoughtProducts.FirstOrDefault(p => p.Id == productId);
 
                     if (selectedProduct != null)
                         break;
