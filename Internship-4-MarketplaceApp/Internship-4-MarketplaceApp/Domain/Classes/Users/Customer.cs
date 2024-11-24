@@ -41,10 +41,19 @@
 
         public void PrintBoughtProducts()
         {
+            Console.Clear();
+            if(BoughtProducts.Count == 0)
+            {
+                Console.WriteLine("Nisi jos nista kupio!\n");
+                return;
+            }
+
+            Console.WriteLine("Kupljeni proizvodi\n");
             foreach(var product in BoughtProducts)
             {
-                Console.WriteLine($"Proizvod: {product.Id} - {product.Name} - {product.ProductType} - {product.Description}");
+                Console.WriteLine(product.ToString());
             }
+            Console.WriteLine("\n");
         }
 
         public void AddProductToFavorite(Product product)

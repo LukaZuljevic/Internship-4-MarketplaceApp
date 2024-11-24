@@ -196,6 +196,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                         customer.AddProductToFavorite(productToFavorite);
                         break;
                     case "5":
+                        customer.PrintBoughtProducts();
                         break;
                     case "6":
                         customer.PrintFavouriteProducts();
