@@ -184,6 +184,9 @@ namespace Internship_4_MarketplaceApp.Presentation
                         marketplace.PrintProducts();
                         break;
                     case "2":
+                        var productToBuy = PickProductToBuy(customer);
+                        if(marketplace.SellProduct(productToBuy, customer))
+                            productToBuy.Salesman.SellProduct(productToBuy);
                         break;
                     case "3":
                         break;
@@ -215,6 +218,36 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             salesman.AddNewProduct(newProduct);
             marketplace.AddNewProduct(newProduct);
+        }
+
+        static Product PickProductToBuy(Customer customer)
+        {
+            Console.Clear();
+            marketplace.PrintProducts();
+            Console.WriteLine($"Stanje na racunu: {customer.Balance}");
+
+            Product selectedProduct = null;
+            while (true)
+            {
+                Console.Write("\nOdaberi Id jednog od proizvoda na listi: ");
+                var pickedProductId = Console.ReadLine();
+
+                if (int.TryParse(pickedProductId, out int productId))
+                {
+                    selectedProduct = marketplace.ListOfProducts.FirstOrDefault(p => p.Id == productId);
+
+                    if (selectedProduct != null)
+                        break;
+                    else
+                        Console.WriteLine("Proizvod s tim Id-em ne postoji!");
+                }
+                else
+                {
+                    Console.WriteLine("Krivi unos, Id mora bit broj.");
+                }
+            }
+
+            return selectedProduct;
         }
 
         static string CheckIfValidString(string attribute, string entity)

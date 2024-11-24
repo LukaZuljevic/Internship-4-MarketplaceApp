@@ -5,7 +5,8 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 {
     public class Product
     {
-        public Guid Id { get; }
+        public static int Counter = 1; 
+        public int Id { get; }
         public string Name { get; set; } 
         public string Description { get; set; }
         public double Price { get; private set; }
@@ -15,6 +16,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
         public Product(string name, string description, double price, Status status, Salesman salesman, ProductType productType)
         {
+            Id = Counter++;
             Name = name;
             Description = description;
             Price = price;
@@ -35,7 +37,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
         public override string ToString()
         {
-            return $"Ime: {Name}, Cijena: {Price}eura, Status: {Status}";
+            return $"Id: {Id}, Ime: {Name}, Cijena: {Price}eura, Status: {Status}";
         }
     }
 }

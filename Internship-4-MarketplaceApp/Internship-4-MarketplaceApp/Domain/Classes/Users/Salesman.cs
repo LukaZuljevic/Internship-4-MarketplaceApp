@@ -28,13 +28,6 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 
         public void SellProduct(Product product)
         {
-            if (ListOfProducts.Contains(product) && product.Status != Data.Enum.Status.Prodano)
-                Console.WriteLine("Uspjesno kupljen proizvod!");
-            else
-            {
-                Console.WriteLine("Taj proizvod ne postoji!");
-                return;
-            }
             product.Status = Data.Enum.Status.Prodano;
             SoldProducts.Add(product);
         }

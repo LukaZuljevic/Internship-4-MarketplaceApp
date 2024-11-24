@@ -9,6 +9,11 @@
             Balance = balance;
         }
 
+        public void SetBalance(double amount)
+        {
+            Balance += amount;
+        }
+
         public override string ToString()
         {
             return $"Ime: {Name}, Email: {Email}, Stanje racuna: {Balance}";
