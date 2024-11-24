@@ -14,12 +14,26 @@ namespace Internship_4_MarketplaceApp.Presentation
         static Salesman testSalesman1 = new Salesman("Mile", "Mile@gmail.com");
         static Salesman testSalesman2 = new Salesman("Mijo", "Mijo@outlook.com");
         static Salesman testSalesman3 = new Salesman("Miki", "Miki@fesb.com");
+        static Product testProduct1 = new Product("Banana", "Ovo je banana", 2, Status.Na_prodaju, testSalesman1, ProductType.Hrana);
+        static Product testProduct2 = new Product("Laptop", "Gaming laptop", 1200, Status.Na_prodaju, testSalesman2, ProductType.Elektronika);
+        static Product testProduct3 = new Product("Pametni mobitel", "Iphone 1", 800, Status.Na_prodaju, testSalesman3, ProductType.Elektronika);
+        static Product testProduct4 = new Product("Majica", "Pamucna majica", 15, Status.Na_prodaju, testSalesman1, ProductType.Odjeca);
+        static Product testProduct5 = new Product("Jaketa", "Topla jaketa", 80, Status.Na_prodaju, testSalesman2, ProductType.Odjeca);
+        static Product testProduct6 = new Product("Jabuka", "Ovo ti je jabuka", 1, Status.Na_prodaju, testSalesman3, ProductType.Hrana);
+        static Product testProduct7 = new Product("Cokolada", "Cokolada sa ljesnjacima", 3, Status.Na_prodaju, testSalesman1, ProductType.Hrana);
 
         static void Main(string[] args)
         {
             marketplace.AddNewUser(testSalesman1);
             marketplace.AddNewUser(testSalesman2);
             marketplace.AddNewUser(testSalesman3);
+            testSalesman1.AddNewProduct(testProduct1);
+            testSalesman1.AddNewProduct(testProduct4);
+            testSalesman2.AddNewProduct(testProduct2);
+            testSalesman3.AddNewProduct(testProduct3);
+            testSalesman2.AddNewProduct(testProduct5);
+            testSalesman3.AddNewProduct(testProduct6);
+            testSalesman1.AddNewProduct(testProduct7);
 
             while (true)
             {
@@ -120,6 +134,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                         AddProductToSell(salesman);
                         break;
                     case "2":
+                        salesman.PrintAllProducts();
                         break;
                     case "3":
                         break;
@@ -253,7 +268,7 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             while (true)
             {
-                Console.Write("Unesi cijenu proizvoda: ");
+                Console.Write("Unesi cijenu proizvoda(eur): ");
 
                 if (double.TryParse(Console.ReadLine(), out priceInput) && priceInput >= 0)
                 {

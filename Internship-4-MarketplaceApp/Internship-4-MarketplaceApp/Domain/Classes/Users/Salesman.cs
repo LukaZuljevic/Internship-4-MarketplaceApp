@@ -35,6 +35,14 @@
             }
         }
 
+        public void PrintAllProducts()
+        {
+            foreach(var product in ListOfProducts)
+            {
+                Console.WriteLine($"Product:  {product.Name} - {product.Description} - {product.Price}eura - {product.Status}");
+            }
+        }
+
         public override string ToString()
         {
             return $"Name: {Name}, Email: {Email}, Earnings: {Earnings}";
