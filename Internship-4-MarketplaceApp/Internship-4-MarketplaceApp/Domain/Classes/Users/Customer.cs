@@ -37,8 +37,10 @@
 
             product.OnSale();
 
-            product.Salesman.SetEarnings((-product.Price + 0.15*product.Price));
+            product.Salesman.SetEarnings((0.15*product.Price - product.Price));
             SetBalance(product.Price * 0.8);
+
+            Console.WriteLine("Uspjesno ste vratili proizvod!\n");
         }
 
         public void SetBalance(double amount)

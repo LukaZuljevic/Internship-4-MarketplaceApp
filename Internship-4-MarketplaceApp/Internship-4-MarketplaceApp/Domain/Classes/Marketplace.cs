@@ -1,4 +1,5 @@
 ﻿using Internship_4_MarketplaceApp.Domain.Classes.Users;
+using Internship_4_MarketplaceApp.Data.Enum;
 
 namespace Internship_4_MarketplaceApp.Domain.Classes
 {
@@ -7,6 +8,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         public List<User> Users { get; }
         public List<Product> ListOfProducts { get; }
         public List<Transaction> ListOfTransactions { get; }
+        public List<Coupon> ListOfCoupons { get; }
         public double MarketplaceBalance { get; private set; }
 
         public Marketplace()
@@ -14,18 +16,19 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             Users = new List<User>();
             ListOfProducts = new List<Product>();
             ListOfTransactions = new List<Transaction>();
+            ListOfCoupons = new List<Coupon>();
             MarketplaceBalance = 0;
         }
 
-        public bool SellProduct(Product product, Customer customer)
+        public bool SellProduct(Product product, Customer customer, double discountPrice)
         {
-            if (!ListOfProducts.Contains(product) || product.Status == Data.Enum.Status.Prodano)
+            if (!ListOfProducts.Contains(product) || product.Status == Status.Prodano)
             {
                 Console.WriteLine("Taj proizvod ne postoji ili je vec prodan!\n");
                 return false;
             }
 
-            if (customer.Balance < product.Price)
+            if (customer.Balance < discountPrice)
             {
                 Console.WriteLine("Kupac nema dovoljno para za ovaj proizvod!\n");
                 return false;
@@ -33,15 +36,15 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
             Console.WriteLine("Uspjesno kupljen proizvod!\n");
 
-            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Kupnja, product);
+            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, TransactionType.Kupnja, product);
             ListOfTransactions.Add(newTransaction);
 
             product.Salesman.SellProduct(product);
             customer.BuyProduct(product);
 
-            product.Salesman.SetEarnings((product.Price - product.Price*0.05));
-            customer.SetBalance(-product.Price);
-            SetBalance(product.Price * 0.05);
+            product.Salesman.SetEarnings((discountPrice - discountPrice * 0.05));
+            customer.SetBalance(-discountPrice);
+            SetBalance(discountPrice * 0.05);
 
             return true;
         }
@@ -59,6 +62,11 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         public void AddNewTransaction(Transaction transaction)
         {
             ListOfTransactions.Add(transaction);
+        }
+
+        public void AddNewCoupon(Coupon coupon)
+        {
+            ListOfCoupons.Add(coupon);
         }
 
         public void PrintUsers()
@@ -87,6 +95,17 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             foreach (var transaction in ListOfTransactions)
             {
                 Console.WriteLine(transaction.ToString());
+            }
+            Console.WriteLine("\n");
+        }
+
+        public void PrintCoupons()
+        {
+            Console.Clear();
+            Console.WriteLine("Dostupni kuponi: \n");
+            foreach (var coupon in ListOfCoupons)
+            {
+                Console.WriteLine(coupon.ToString());
             }
             Console.WriteLine("\n");
         }

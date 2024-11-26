@@ -11,6 +11,9 @@ namespace Internship_4_MarketplaceApp.Presentation
     public class Program
     {
         static Marketplace marketplace = new Marketplace();
+        static Coupon testCoupon1 = new Coupon(ProductType.Elektronika, new DateTime(2024, 12, 12), "10POPUSTA", 0.1);
+        static Coupon testCoupon2 = new Coupon(ProductType.Odjeca, new DateTime(2022, 11, 8), "5POPUSTA", 0.05);
+        static Coupon testCoupon3 = new Coupon(ProductType.Hrana, new DateTime(2026, 1, 1), "20POPUSTA", 0.2);
         static Customer testCustomer1 = new Customer("Ante", "Ante@gmail.com", 100);
         static Salesman testSalesman1 = new Salesman("Mile", "Mile@gmail.com");
         static Salesman testSalesman2 = new Salesman("Mijo", "Mijo@outlook.com");
@@ -37,6 +40,10 @@ namespace Internship_4_MarketplaceApp.Presentation
             marketplace.AddNewProduct(testProduct5);
             marketplace.AddNewProduct(testProduct6);
             marketplace.AddNewProduct(testProduct7);
+
+            marketplace.AddNewCoupon(testCoupon1);
+            marketplace.AddNewCoupon(testCoupon2);
+            marketplace.AddNewCoupon(testCoupon3);
 
             testSalesman1.AddNewProduct(testProduct1);
             testSalesman1.AddNewProduct(testProduct4);
@@ -149,7 +156,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine($"Ukupna zarada: {salesman.Earnings}\n");
+                        Console.WriteLine($"Ukupna zarada korisnika {salesman.Name}: {salesman.Earnings}\n");
                         break;
                     case "4":
                         var productCategory = PickProductType();
@@ -186,10 +193,12 @@ namespace Internship_4_MarketplaceApp.Presentation
                 {
                     case "1":
                         marketplace.PrintProducts();
+                        Console.WriteLine($"Stanje na racunu: {customer.Balance}\n");
                         break;
                     case "2":
                         var productToBuy = PickProductFromMarketplace(customer);
-                        marketplace.SellProduct(productToBuy, customer);
+                        var discountPrice = UseCoupon(productToBuy);
+                        marketplace.SellProduct(productToBuy, customer, discountPrice);
                         break;
                     case "3":
                         var productToReturn = PickProductToReturn(customer);
@@ -389,7 +398,7 @@ namespace Internship_4_MarketplaceApp.Presentation
             {
                 Console.Write(prompt);
 
-                if (double.TryParse(Console.ReadLine(), out input) && input >= 0)
+                if (double.TryParse(Console.ReadLine(), out input) && input > 0)
                 {
                     return input;
                 }
@@ -408,13 +417,13 @@ namespace Internship_4_MarketplaceApp.Presentation
             {
                 Console.Write("Unesi cijenu proizvoda(eur): ");
 
-                if (double.TryParse(Console.ReadLine(), out priceInput) && priceInput >= 0)
+                if (double.TryParse(Console.ReadLine(), out priceInput) && priceInput > 0)
                 {
                     return priceInput;
                 }
                 else
                 {
-                    Console.WriteLine("Krivi unos, unesi ponovno!\n");
+                    Console.WriteLine("Krivi unos, cijena mora biti veca od 0!\n");
                 }
             }
         }
@@ -440,7 +449,7 @@ namespace Internship_4_MarketplaceApp.Presentation
                     return (ProductType)selectedCategory;
                 }
 
-                Console.WriteLine("Krivi unos, unesi ponovno!\n");
+                Console.WriteLine("Krivi unos, unesi jednu od ponudenih opcija!\n");
             }
         }
 
@@ -525,6 +534,33 @@ namespace Internship_4_MarketplaceApp.Presentation
                 Console.WriteLine($"{salesman.Name} u tom periodu nije zaradio nista.\n ");
             else
                 Console.WriteLine($"{salesman.Name} je zaradio {earnings} eura u tom razdoblju\n");
+        }
+
+        static double UseCoupon(Product product)
+        {
+            Console.Clear();
+            marketplace.PrintCoupons();
+
+            while (true)
+            {
+                Console.Write("Unesi kupon(ako ne zelis kupon ili ako kupon za tu kateogoriju ne postoji stisni enter): ");
+                var couponName = Console.ReadLine();
+
+                if(string.IsNullOrEmpty(couponName))
+                    return product.Price;
+
+                Coupon coupon = marketplace.ListOfCoupons.FirstOrDefault(c => c.CouponCode == couponName && c.ProductType == product.ProductType && c.ExpirationDate > DateTime.Now);
+
+                if (coupon == null)
+                {
+                    Console.WriteLine("Kupon ne postoji, ne vrijedi za kategoriju tvog proizvoda ili mu je istekao rok!\n");
+                }
+                else
+                {
+                    Console.WriteLine("Kupon uspjesno iskoristen!\n");
+                    return (product.Price - product.Price * coupon.PercentageOffPrice);
+                }
+            }
         }
     }
 }

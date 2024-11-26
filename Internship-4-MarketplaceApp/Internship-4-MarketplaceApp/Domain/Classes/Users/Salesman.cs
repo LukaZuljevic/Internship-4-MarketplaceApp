@@ -1,4 +1,6 @@
-﻿namespace Internship_4_MarketplaceApp.Domain.Classes.Users
+﻿using Internship_4_MarketplaceApp.Data.Enum;
+
+namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 {
     public class Salesman : User
     {
@@ -34,6 +36,13 @@
         public void PrintAllProducts()
         {
             Console.Clear();
+
+            if(ListOfProducts.Count == 0)
+            {
+                Console.WriteLine("Jos nemas svojih proizvoda na marketu\n");
+                return;
+            }
+
             Console.WriteLine($"Proizvodi korisnika {Name}: \n");
             foreach(var product in ListOfProducts)
             {
@@ -47,13 +56,24 @@
             Earnings += amount;
         }
 
-        public void ProductByCategory(Data.Enum.ProductType category)
+        public void ProductByCategory(ProductType category)
         {
-            foreach(var product in ListOfProducts)
+            Console.Clear();
+            bool productFound = false;
+
+            Console.WriteLine($"Prodani prozivodi pod kategorijom '{category}':\n");
+            foreach (var product in ListOfProducts)
             {
-                if(product.ProductType == category)
+                if (product.ProductType == category && product.Status == Status.Prodano)
+                {
                     Console.WriteLine($"{product.ToString()}");
+                    productFound = true;
+                }
             }
+            Console.WriteLine("\n");
+
+            if (!productFound)
+                Console.WriteLine("Nema prodanih proizvoda te kategorije\n");
         }
 
         public override string ToString()
