@@ -12,7 +12,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
 
             while (true)
             {
-                Console.WriteLine("1 - Pegledaj sve dostupne proizvode\n2 - Kupi proizvod\n3 - Vrati kupljeni proizvod\n4 - Dodaj proizvod na omiljenu listu\n5 - Pregledaj povijest kupljenih proizvoda\n6 - Pregledaj listu omiljenih prozivoda\n7 - Vrati se nazad na pocetni menu");
+                Console.WriteLine("1 - Pegledaj sve dostupne proizvode\n2 - Kupi proizvod\n3 - Vrati kupljeni proizvod\n4 - Dodaj proizvod na omiljenu listu\n5 - Pregledaj povijest kupljenih proizvoda\n6 - Pregledaj listu omiljenih prozivoda\n7 - Odjavi se");
                 var userSelection = Console.ReadLine();
 
                 switch (userSelection)
@@ -23,7 +23,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
                         break;
                     case "2":
                         var productToBuy = CustomerActions.PickProductFromMarketplace(customer, marketplace);
-                        var discountPrice = CustomerActions.UseCoupon(productToBuy, marketplace);
+                        var discountPrice = customer.UseCoupon(productToBuy, marketplace);
                         marketplace.SellProduct(productToBuy, customer, discountPrice);
                         break;
                     case "3":

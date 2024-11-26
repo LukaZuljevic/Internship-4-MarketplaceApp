@@ -25,7 +25,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
         public override string ToString()
         {
-            return $"Id: {Id}, Kupac: {Customer.Name}, Prodavac: {Salesman.Name}, Proizvid: {Product}, Datum: {DateOfTransaction}, Tip: {TransactionType}";
+            return $"Id: {Id}, Kupac: {Customer.Name}, Prodavac: {Salesman.Name}, Proizvod: {Product.Name}, Datum: {DateOfTransaction}, Tip: {TransactionType}, Iznos: {Product.Price}\n";
         }
     }
 }

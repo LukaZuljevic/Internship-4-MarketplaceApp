@@ -13,13 +13,13 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
 
             while (true)
             {
-                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Pregledaj svoju ukupnu zaradu\n4 - Pregledaj prodane proizvode po kategoriji\n5 - Pregledaj svoju ukupnu zaradu u odredenom razdoblju\n6 - Promijeni cijenu proizvoda\n7 - Vrati se nazad na pocetni menu");
+                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Pregledaj svoju ukupnu zaradu\n4 - Pregledaj prodane proizvode po kategoriji\n5 - Pregledaj svoju ukupnu zaradu u odredenom razdoblju\n6 - Promijeni cijenu proizvoda\n7 - Pogledaj sve izvrsene transakcije na marketu\n8 - Odjavi se");
                 var userSelection = Console.ReadLine();
 
                 switch (userSelection)
                 {
                     case "1":
-                        SalesmanActions.AddProductToSell(salesman, marketplace);
+                        salesman.AddProductToSell(salesman, marketplace);
                         break;
                     case "2":
                         salesman.PrintAllProducts();
@@ -33,12 +33,16 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
                         salesman.ProductByCategory(productCategory);
                         break;
                     case "5":
-                        SalesmanActions.EarningsInTimePeriod(salesman, marketplace);
+                        salesman.EarningsInTimePeriod(salesman, marketplace);
                         break;
                     case "6":
-                        SalesmanActions.ChangeProductPrice(salesman);
+                        salesman.ChangeProductPrice();
                         break;
                     case "7":
+                        Console.Clear();
+                        marketplace.PrintTransactions();
+                        break;
+                    case "8":
                         Console.Clear();
                         return;
                     default:

@@ -36,7 +36,10 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
             Console.WriteLine("Uspjesno kupljen proizvod!\n");
 
-            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, TransactionType.Kupnja, product);
+            Product discountedProduct = product;
+            discountedProduct.ChangePrice(discountPrice);
+
+            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, TransactionType.Kupnja, discountedProduct);
             ListOfTransactions.Add(newTransaction);
 
             product.Salesman.SellProduct(product);
@@ -91,6 +94,13 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         public void PrintTransactions()
         {
             Console.Clear();
+
+            if(ListOfTransactions.Count == 0)
+            {
+                Console.WriteLine("Ni jedna transakcija jos nije izvrsena!\n");
+                return;
+            }
+
             Console.WriteLine("Sve transakcije\n");
             foreach (var transaction in ListOfTransactions)
             {

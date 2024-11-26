@@ -89,6 +89,33 @@
             Console.WriteLine("\n");
         }
 
+        public double UseCoupon(Product product, Marketplace marketplace)
+        {
+            Console.Clear();
+            marketplace.PrintCoupons();
+
+            while (true)
+            {
+                Console.Write("Unesi kupon(ako ne zelis kupon ili ako kupon za tu kateogoriju ne postoji stisni enter): ");
+                var couponName = Console.ReadLine().Trim();
+
+                if (string.IsNullOrEmpty(couponName))
+                    return product.Price;
+
+                Coupon coupon = marketplace.ListOfCoupons.FirstOrDefault(c => c.CouponCode == couponName && c.ProductType == product.ProductType && c.ExpirationDate > DateTime.Now);
+
+                if (coupon == null)
+                {
+                    Console.WriteLine("Kupon ne postoji, ne vrijedi za kategoriju tvog proizvoda ili mu je istekao rok!\n");
+                }
+                else
+                {
+                    Console.WriteLine("Kupon uspjesno iskoristen!\n");
+                    return (product.Price - product.Price * coupon.PercentageOffPrice);
+                }
+            }
+        }
+
         public override string ToString()
         {
             return $"Ime: {Name}, Email: {Email}, Stanje racuna: {Balance}";
