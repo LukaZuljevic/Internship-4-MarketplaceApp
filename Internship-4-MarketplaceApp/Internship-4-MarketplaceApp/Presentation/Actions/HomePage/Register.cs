@@ -10,7 +10,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.HomePage
         public static void DisplayRegistration(Marketplace marketplace)
         {
             Console.Clear();
-            Console.WriteLine("Registracija korisnika:\n");
+            Console.WriteLine("Registracija korisnika\n");
 
             var userName = UserInputHelper.CheckIfValidString("ime", "korisnika");
             var userEmail = UserInputHelper.CheckIfValidEmail();
@@ -20,7 +20,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.HomePage
 
             if (marketplace.Users.Any(user => user.Email == userEmail))
             {
-                Console.WriteLine("Korisnik s tim email-om već postoji.");
+                Console.WriteLine("Korisnik s tim email-om vec postoji.");
                 return;
             }
 

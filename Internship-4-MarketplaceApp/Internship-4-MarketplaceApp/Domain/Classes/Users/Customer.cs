@@ -69,7 +69,7 @@
         {
             Console.Clear();
             FavoriteProducts.Add(product);
-            Console.WriteLine("Uspjesno dodan proizvodi u favorite!\n");
+            Console.WriteLine("Uspjesno dodan proizvod u favorite.\n");
         }
 
         public void PrintFavouriteProducts()
@@ -77,11 +77,11 @@
             Console.Clear();
             if (FavoriteProducts.Count == 0) 
             {
-                Console.WriteLine("Nemas proizvoda u favoritima\n");
+                Console.WriteLine("Lista tvojih favorita je prazna.\n");
                 return;
             }
 
-            Console.WriteLine("Lista favorita:\n");
+            Console.WriteLine("Lista favorita\n");
             foreach(var product in FavoriteProducts)
             {
                 Console.WriteLine(product.ToString());
@@ -96,7 +96,7 @@
 
             while (true)
             {
-                Console.Write("Unesi kupon(ako ne zelis kupon ili ako kupon za tu kateogoriju ne postoji stisni enter): ");
+                Console.Write("Unesi kupon kod: ");
                 var couponName = Console.ReadLine().Trim();
 
                 if (string.IsNullOrEmpty(couponName))
@@ -106,7 +106,7 @@
 
                 if (coupon == null)
                 {
-                    Console.WriteLine("Kupon ne postoji, ne vrijedi za kategoriju tvog proizvoda ili mu je istekao rok!\n");
+                    Console.WriteLine("Kupon ne postoji, ne vrijedi za kategoriju tvog proizvoda ili mu je istekao rok.\n");
                 }
                 else
                 {

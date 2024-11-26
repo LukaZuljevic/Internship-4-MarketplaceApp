@@ -132,6 +132,8 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 
         public void AddProductToSell(Salesman salesman, Marketplace marketplace)
         {
+            Console.Clear();
+
             var productName = UserInputHelper.CheckIfValidString("ime", "proizvoda");
             var productDescription = UserInputHelper.CheckIfValidString("opis", "proizvoda");
             var productPrice = UserInputHelper.CheckIfValidPrice();

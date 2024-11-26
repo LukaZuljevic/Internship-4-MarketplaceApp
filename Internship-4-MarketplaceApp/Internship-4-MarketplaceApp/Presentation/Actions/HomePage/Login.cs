@@ -10,7 +10,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.HomePage
         public static void DisplayLogin(Marketplace marketplace)
         {
             Console.Clear();
-            Console.WriteLine("Prijava korisnika:\n");
+            Console.WriteLine("Prijava korisnika\n");
 
             var userEmail = UserInputHelper.CheckIfValidEmail();
 
@@ -32,7 +32,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.HomePage
             }
             else
             {
-                Console.WriteLine("Ne postoji korisnik s tim email-om!\n");
+                Console.WriteLine("Ne postoji korisnik s tim email-om.\n");
             }
         }
     }

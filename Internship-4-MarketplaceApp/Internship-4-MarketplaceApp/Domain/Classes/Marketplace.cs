@@ -20,24 +20,23 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             MarketplaceBalance = 0;
         }
 
-        public bool SellProduct(Product product, Customer customer, double discountPrice)
+        public void SellProduct(Product product, Customer customer, double discountPrice)
         {
-            if (!ListOfProducts.Contains(product) || product.Status == Status.Prodano)
+            if (product.Status == Status.Prodano)
             {
-                Console.WriteLine("Taj proizvod ne postoji ili je vec prodan!\n");
-                return false;
+                Console.WriteLine("Taj proizvod je vec prodan.\n");
+                return;
             }
 
             if (customer.Balance < discountPrice)
             {
-                Console.WriteLine("Kupac nema dovoljno para za ovaj proizvod!\n");
-                return false;
+                Console.WriteLine("Kupac nema dovoljno para za ovaj proizvod.\n");
+                return;
             }
 
             Console.WriteLine("Uspjesno kupljen proizvod!\n");
 
-            Product discountedProduct = product;
-            discountedProduct.ChangePrice(discountPrice);
+            Product discountedProduct = new Product(product.Name, product.Description, discountPrice, product.Status, product.Salesman, product.ProductType);
 
             Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, TransactionType.Kupnja, discountedProduct);
             ListOfTransactions.Add(newTransaction);
@@ -48,8 +47,6 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             product.Salesman.SetEarnings((discountPrice - discountPrice * 0.05));
             customer.SetBalance(-discountPrice);
             SetBalance(discountPrice * 0.05);
-
-            return true;
         }
 
         public void AddNewUser(User newUser)
@@ -97,7 +94,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
             if(ListOfTransactions.Count == 0)
             {
-                Console.WriteLine("Ni jedna transakcija jos nije izvrsena!\n");
+                Console.WriteLine("Ni jedna transakcija jos nije izvrsena.\n");
                 return;
             }
 
@@ -112,7 +109,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         public void PrintCoupons()
         {
             Console.Clear();
-            Console.WriteLine("Dostupni kuponi: \n");
+            Console.WriteLine("Dostupni kuponi(ako nema valjanog kupona stisni enter) \n");
             foreach (var coupon in ListOfCoupons)
             {
                 Console.WriteLine(coupon.ToString());

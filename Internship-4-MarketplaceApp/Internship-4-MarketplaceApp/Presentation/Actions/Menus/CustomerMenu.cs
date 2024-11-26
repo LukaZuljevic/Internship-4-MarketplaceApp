@@ -12,7 +12,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
 
             while (true)
             {
-                Console.WriteLine("1 - Pegledaj sve dostupne proizvode\n2 - Kupi proizvod\n3 - Vrati kupljeni proizvod\n4 - Dodaj proizvod na omiljenu listu\n5 - Pregledaj povijest kupljenih proizvoda\n6 - Pregledaj listu omiljenih prozivoda\n7 - Odjavi se");
+                Console.WriteLine("1 - Pegledaj sve dostupne proizvode\n2 - Kupi proizvod\n3 - Vrati kupljeni proizvod\n4 - Dodaj proizvod na omiljenu listu\n5 - Povijest kupljenih proizvoda\n6 - Lista omiljenih prozivoda\n7 - Odjavi se");
                 var userSelection = Console.ReadLine();
 
                 switch (userSelection)

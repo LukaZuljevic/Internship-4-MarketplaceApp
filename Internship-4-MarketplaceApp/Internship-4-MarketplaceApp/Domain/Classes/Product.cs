@@ -42,7 +42,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
         public override string ToString()
         {
-            return $"Id: {Id}, Ime: {Name}, Cijena: {Price}eura, Status: {Status}";
+            return $"Id: {Id},  Ime: {Name},  Cijena: {Price} eura,  Status: {Status},  Kategorija: {ProductType}";
         }
     }
 }

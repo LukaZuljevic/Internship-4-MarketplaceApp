@@ -24,11 +24,11 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions
                     if (selectedProduct != null)
                         break;
                     else
-                        Console.WriteLine("Proizvod s tim Id-em ne postoji!");
+                        Console.WriteLine("Proizvod s tim Id-em ne postoji.\n");
                 }
                 else
                 {
-                    Console.WriteLine("Krivi unos, Id mora bit broj.");
+                    Console.WriteLine("Krivi unos, Id mora bit broj.\n");
                 }
             }
 

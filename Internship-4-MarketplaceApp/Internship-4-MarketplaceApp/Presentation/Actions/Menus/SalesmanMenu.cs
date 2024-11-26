@@ -13,7 +13,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
 
             while (true)
             {
-                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Pregledaj svoju ukupnu zaradu\n4 - Pregledaj prodane proizvode po kategoriji\n5 - Pregledaj svoju ukupnu zaradu u odredenom razdoblju\n6 - Promijeni cijenu proizvoda\n7 - Pogledaj sve izvrsene transakcije na marketu\n8 - Odjavi se");
+                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Ukupna zarada\n4 - Zarada u odredenom razdoblju\n5 - Prodani proizvodi po kategoriji\n6 - Promijeni cijenu proizvoda\n7 - Sve izvrsene transakcije na marketu\n8 - Odjavi se");
                 var userSelection = Console.ReadLine();
 
                 switch (userSelection)
@@ -26,14 +26,14 @@ namespace Internship_4_MarketplaceApp.Presentation.Actions.Menus
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine($"Ukupna zarada korisnika {salesman.Name}: {salesman.Earnings}\n");
+                        Console.WriteLine($"Ukupna zarada korisnika {salesman.Name}: {salesman.Earnings} eura\n");
                         break;
                     case "4":
-                        var productCategory = UserInputHelper.PickProductType();
-                        salesman.ProductByCategory(productCategory);
+                        salesman.EarningsInTimePeriod(salesman, marketplace);
                         break;
                     case "5":
-                        salesman.EarningsInTimePeriod(salesman, marketplace);
+                        var productCategory = UserInputHelper.PickProductType();
+                        salesman.ProductByCategory(productCategory);
                         break;
                     case "6":
                         salesman.ChangeProductPrice();

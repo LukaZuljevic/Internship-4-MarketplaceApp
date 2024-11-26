@@ -9,28 +9,32 @@ namespace Internship_4_MarketplaceApp.Presentation.Helpers
     {
         public static string CheckIfValidString(string attribute, string entity)
         {
-            var input = string.Empty;
-
             while (true)
             {
                 Console.Write($"Unesi {attribute} {entity}: ");
-                input = Console.ReadLine().Trim();
+                var input = Console.ReadLine().Trim();
 
-                if (string.IsNullOrEmpty(input))
+                if (string.IsNullOrWhiteSpace(input))
                 {
-                    Console.WriteLine("Ne smije biti empty string!\n");
-                    continue;
+                    Console.WriteLine("Ne smije biti prazan unos!\n");
                 }
                 else if (!input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
                 {
-                    Console.WriteLine("Smijes unit samo slova!\n");
-                    continue;
+                    Console.WriteLine("Samo su slova dopustena!\n");
                 }
-
-                break;
+                else if (input.Length > 20)
+                {
+                    Console.WriteLine("Unos mora biti kraci od 20 znakova!\n");
+                }
+                else if (input.Length < 3)
+                {
+                    Console.WriteLine("Unos mora biti duzi od 2 znaka!\n");
+                }
+                else
+                {
+                    return input;
+                }
             }
-
-            return input;
         }
 
         public static string CheckIfValidEmail()
@@ -39,12 +43,12 @@ namespace Internship_4_MarketplaceApp.Presentation.Helpers
 
             while (true)
             {
-                Console.Write("Unesi email korisnika(stisni enter za prekid unosa): ");
+                Console.Write("Unesi email korisnika(Enter za prekid unosa): ");
                 emailInput = Console.ReadLine().Trim();
 
                 if (string.IsNullOrEmpty(emailInput))
                 {
-                    Console.WriteLine("Otkazan unos\n");
+                    Console.WriteLine("Otkazan unos!\n");
                     return null;
                 }
 
@@ -55,7 +59,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Helpers
                 }
                 else
                 {
-                    Console.WriteLine("Unesi validan email!\n");
+                    Console.WriteLine("Unesi validan email.\n");
                     continue;
                 }
             }
@@ -98,7 +102,7 @@ namespace Internship_4_MarketplaceApp.Presentation.Helpers
                 }
                 else
                 {
-                    Console.WriteLine("Krivi unos, unesi ponovno!");
+                    Console.WriteLine("Krivi unos, unesi ponovno!\n");
                 }
             }
         }
