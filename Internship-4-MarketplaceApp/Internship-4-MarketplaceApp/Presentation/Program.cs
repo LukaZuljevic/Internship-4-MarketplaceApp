@@ -84,6 +84,9 @@ namespace Internship_4_MarketplaceApp.Presentation
             var userName = CheckIfValidString("ime", "korisnika");
             var userEmail = CheckIfValidEmail();
 
+            if (userEmail == null)
+                return;
+
             if (marketplace.Users.Any(user => user.Email == userEmail))
             {
                 Console.WriteLine("Korisnik s tim email-om već postoji.");
@@ -116,6 +119,9 @@ namespace Internship_4_MarketplaceApp.Presentation
             Console.WriteLine("Prijava korisnika:\n");
 
             var userEmail = CheckIfValidEmail();
+
+            if (userEmail == null)
+                return;
 
             var matchingUser = marketplace.Users.FirstOrDefault(user => user.Email == userEmail);
 
@@ -345,13 +351,13 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             while (true)
             {
-                Console.Write("Unesi email korisnika: ");
-                emailInput = Console.ReadLine();
+                Console.Write("Unesi email korisnika(stisni enter za prekid unosa): ");
+                emailInput = Console.ReadLine().Trim();
 
                 if (string.IsNullOrEmpty(emailInput))
                 {
-                    Console.WriteLine("Ne smije biti empty string!\n");
-                    continue;
+                    Console.WriteLine("Otkazan unos\n");
+                    return null;
                 }
 
                 string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$"; //straight from google
