@@ -20,13 +20,16 @@
 
         public void ReturnProduct(Product product, Marketplace marketplace)
         {
+            if(product == null)
+                return;
+
             if (!BoughtProducts.Contains(product))
             {
                 Console.WriteLine("Taj proizvod nije tvoj.\n");
                 return;
             }
 
-            Transaction newTransaction = new Transaction(this, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Povrat);
+            Transaction newTransaction = new Transaction(this, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Povrat, product);
             marketplace.AddNewTransaction(newTransaction);
 
             BoughtProducts.Remove(product);

@@ -11,19 +11,21 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
         public Salesman Salesman { get; set; }
         public DateTime DateOfTransaction { get; private set; }
         public TransactionType TransactionType { get; set; }
+        public Product Product { get; set; }
 
-        public Transaction(Customer customer, Salesman salesman, DateTime dateOfTransaction, TransactionType transactionType)
+        public Transaction(Customer customer, Salesman salesman, DateTime dateOfTransaction, TransactionType transactionType, Product product)
         {
             Id = Counter++;
             Customer = customer;
             Salesman = salesman;
             DateOfTransaction = dateOfTransaction;
             TransactionType = transactionType;
+            Product = product;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id}, Kupac: {Customer.Name}, Prodavac: {Salesman.Name}, Datum: {DateOfTransaction}, Tip: {TransactionType}";
+            return $"Id: {Id}, Kupac: {Customer.Name}, Prodavac: {Salesman.Name}, Proizvid: {Product}, Datum: {DateOfTransaction}, Tip: {TransactionType}";
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
 
             Console.WriteLine("Uspjesno kupljen proizvod!\n");
 
-            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Kupnja);
+            Transaction newTransaction = new Transaction(customer, product.Salesman, DateTime.Now, Data.Enum.TransactionType.Kupnja, product);
             ListOfTransactions.Add(newTransaction);
 
             product.Salesman.SellProduct(product);

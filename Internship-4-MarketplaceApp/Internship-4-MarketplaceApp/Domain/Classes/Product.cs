@@ -35,6 +35,11 @@ namespace Internship_4_MarketplaceApp.Domain.Classes
             Status = Status.Prodano;
         }
 
+        public void ChangePrice(double newPrice)
+        {
+            Price = newPrice;
+        }
+
         public override string ToString()
         {
             return $"Id: {Id}, Ime: {Name}, Cijena: {Price}eura, Status: {Status}";

@@ -2,6 +2,7 @@
 using Internship_4_MarketplaceApp.Domain.Classes;
 using Internship_4_MarketplaceApp.Domain.Classes.Users;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks.Sources;
 
@@ -86,7 +87,7 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             if(userType == UserType.Customer)
             {
-                var customerBalance = CheckIfValidBalance();
+                var customerBalance = CheckIfValidNumber("Unesi pocetni budzet kupca: ");
                 Customer newCustomer = new Customer(userName, userEmail, customerBalance);
 
                 marketplace.AddNewUser(newCustomer);
@@ -135,7 +136,7 @@ namespace Internship_4_MarketplaceApp.Presentation
 
             while (true)
             {
-                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Pregledaj svoju ukupnu zaradu\n4 - Pregledaj prodane proizvode po kategoriji\n5 - Pregledaj svoju ukupnu zaradu u odredenom razdoblju\n6 - Vrati se nazad na pocetni menu");
+                Console.WriteLine("1 - Dodaj proizvod\n2 - Pregledaj sve svoje proizvode\n3 - Pregledaj svoju ukupnu zaradu\n4 - Pregledaj prodane proizvode po kategoriji\n5 - Pregledaj svoju ukupnu zaradu u odredenom razdoblju\n6 - Promijeni cijenu proizvoda\n7 - Vrati se nazad na pocetni menu");
                 var userSelection = Console.ReadLine();
 
                 switch (userSelection)
@@ -155,9 +156,12 @@ namespace Internship_4_MarketplaceApp.Presentation
                         salesman.ProductByCategory(productCategory);
                         break;
                     case "5":
-                        //napravi ovo!
+                        EarningsInTimePeriod(salesman);
                         break;
                     case "6":
+                        ChangeProductPrice(salesman);
+                        break;
+                    case "7":
                         Console.Clear();
                         return;
                     default:
@@ -212,6 +216,19 @@ namespace Internship_4_MarketplaceApp.Presentation
             }
         }
 
+        static void ChangeProductPrice(Salesman salesman)
+        {
+            salesman.PrintAllProducts();
+
+            var productId = CheckIfValidId(salesman);
+            var newPrice = CheckIfValidNumber("Unesi novu cijenu proizvoda: ");
+
+            var product = salesman.ListOfProducts.FirstOrDefault(p => p.Id == productId);
+            product.ChangePrice(newPrice);
+
+            Console.WriteLine("Cijena uspjesno promijenjena!\n");
+        }
+
         static void AddProductToSell(Salesman salesman)
         {
             var productName = CheckIfValidString("ime", "proizvoda");
@@ -259,6 +276,9 @@ namespace Internship_4_MarketplaceApp.Presentation
         {
             Console.Clear();
             customer.PrintBoughtProducts();
+
+            if (customer.BoughtProducts.Count == 0)
+                return null;
 
             Product selectedProduct = null;
             while (true)
@@ -361,21 +381,21 @@ namespace Internship_4_MarketplaceApp.Presentation
             }
         }
 
-        static double CheckIfValidBalance()
+        static double CheckIfValidNumber(string prompt)
         {
-            double balanceInput = 0;
+            double input = 0;
 
             while (true)
             {
-                Console.Write("Unesi pocetni budzet kupca: ");
+                Console.Write(prompt);
 
-                if (double.TryParse(Console.ReadLine(), out balanceInput) && balanceInput >= 0)
+                if (double.TryParse(Console.ReadLine(), out input) && input >= 0)
                 {
-                    return balanceInput;
+                    return input;
                 }
                 else
                 {
-                    Console.WriteLine("Krivi unos, unesi ponovno!\n");
+                    Console.WriteLine("Krivi unos, unesi broj veci od 0!\n");
                 }
             }
         }
@@ -422,6 +442,89 @@ namespace Internship_4_MarketplaceApp.Presentation
 
                 Console.WriteLine("Krivi unos, unesi ponovno!\n");
             }
+        }
+
+        static int CheckIfValidId(Salesman salesman)
+        {
+            while (true)
+            {
+                Console.Write("\nOdaberi Id jednog od proizvoda na listi: ");
+                var pickedProductId = Console.ReadLine();
+
+                if (int.TryParse(pickedProductId, out int productId))
+                {
+                    if(salesman.ListOfProducts.FirstOrDefault(p => p.Id == productId) != null)
+                        return productId;
+                    else
+                        Console.WriteLine("Proizvod s tim Id-em ne postoji!");
+                }
+                else
+                {
+                    Console.WriteLine("Krivi unos, Id mora bit broj.");
+                }
+            }
+
+        }
+
+        static DateTime CheckDate(string typeOfDate)
+        {
+            DateTime dateOutput;
+
+            while (true)
+            {
+                Console.Write($"Unesi datum {typeOfDate} perioda(yyyy-MM-dd): ");
+                var input = Console.ReadLine();
+
+                if (!DateTime.TryParseExact(input, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateOutput))
+                {
+                    Console.WriteLine("Krivi unos, unesi datum u formatu (yyyy-MM-dd)!");
+                    continue;
+                }
+
+                break;
+            }
+
+            return dateOutput;
+        }
+
+        static void EarningsInTimePeriod(Salesman salesman)
+        {
+            Console.Clear();
+
+            var startDate = CheckDate("pocetka");
+            var endDate = CheckDate("kraja");
+
+            while(endDate < startDate)
+            {
+                Console.WriteLine("Datum kraja ne moze bit prije pocetka!");
+                endDate = CheckDate("kraja");
+            }
+
+            double earnings = 0;
+
+            var filteredTransactions = marketplace.ListOfTransactions
+                .Where(transaction => transaction.Salesman == salesman
+                    && transaction.DateOfTransaction > startDate
+                    && transaction.DateOfTransaction < endDate);
+
+            foreach (var transaction in filteredTransactions)
+            {
+                switch (transaction.TransactionType)
+                {
+                    case TransactionType.Kupnja:
+                        earnings += transaction.Product.Price * 0.95;
+                        break;
+
+                    case TransactionType.Povrat:
+                        earnings -= transaction.Product.Price * 0.85;
+                        break;
+                }
+            }
+
+            if (earnings == 0)
+                Console.WriteLine($"{salesman.Name} u tom periodu nije zaradio nista.\n ");
+            else
+                Console.WriteLine($"{salesman.Name} je zaradio {earnings} eura u tom razdoblju\n");
         }
     }
 }

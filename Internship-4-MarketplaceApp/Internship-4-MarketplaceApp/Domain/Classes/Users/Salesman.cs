@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace Internship_4_MarketplaceApp.Domain.Classes.Users
+﻿namespace Internship_4_MarketplaceApp.Domain.Classes.Users
 {
     public class Salesman : User
     {
