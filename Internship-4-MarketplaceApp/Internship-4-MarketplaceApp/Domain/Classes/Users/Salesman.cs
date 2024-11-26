@@ -61,7 +61,7 @@ namespace Internship_4_MarketplaceApp.Domain.Classes.Users
             Console.Clear();
             bool productFound = false;
 
-            Console.WriteLine($"Prodani prozivodi pod kategorijom '{category}':\n");
+            Console.WriteLine($"Prodani prozivodi pod kategorijom '{category}':");
             foreach (var product in ListOfProducts)
             {
                 if (product.ProductType == category && product.Status == Status.Prodano)
